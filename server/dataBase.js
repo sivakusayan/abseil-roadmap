@@ -1,7 +1,11 @@
+/**
+ * @file Logic relevant to interacting with the database.
+ */
+
 const { Client } = require("pg");
 const format = require("pg-format");
 
-const { getTipsFromRSS } = require("./dataSource");
+const { getPostsFromRSS } = require("./dataSource");
 
 const clientConfig = {
   user: process.env.DB_USER,
@@ -11,24 +15,30 @@ const clientConfig = {
 };
 const client = new Client(clientConfig);
 
-const getInsertArrayFromTip = (tip) => {
-  return [tip.id, tip.title, tip.description, tip.pubDate, tip.link];
-};
-
-const updateDatabase = async () => {
+/**
+ * Makes sure the cached posts table is in sync with the RSS
+ * from the Abseil C++ Tips blog.
+ */
+const syncPostsTableWithSource = async () => {
   await client.connect();
   try {
-    const tips = await getTipsFromRSS();
-    const tipsToInsert = tips.map((tip) => getInsertArrayFromTip(tip));
-    // We'll need to pull in updates to content if they exist from the source material.
+    const posts = await getPostsFromRSS();
     const query = format(
-      "INSERT INTO tips (id, title, content_html, pub_date, link) VALUES %L ON CONFLICT (id) DO UPDATE SET content_html = EXCLUDED.content_html",
-      tipsToInsert
+      `INSERT INTO posts 
+        (id, title_html, content_html, pub_date, link) 
+       VALUES %L 
+       ON CONFLICT (id) 
+        DO UPDATE SET content_html = EXCLUDED.content_html`,
+      posts.map((tip) => [
+        tip.id,
+        tip.title,
+        tip.description,
+        tip.pubDate,
+        tip.link,
+      ])
     );
 
     await client.query("BEGIN");
-    const res = await client.query(query);
-    console.log(res);
     await client.query("COMMIT");
   } catch (e) {
     await client.query("ROLLBACK");
@@ -39,5 +49,5 @@ const updateDatabase = async () => {
 };
 
 module.exports = {
-  updateDatabase,
+  syncPostsTableWithSource,
 };

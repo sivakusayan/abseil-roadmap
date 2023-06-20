@@ -1,16 +1,34 @@
+/**
+ * @file Logic relevant to fetching and manipulating data from
+ * the original data source of our application, which is the RSS
+ * of the Abseil C++ tips blog.
+ * https://abseil.io/tips/
+ */
+
 const { XMLParser } = require("fast-xml-parser");
 
-const getTipsFromRSS = async () => {
+/**
+ * @returns {Promise<Post[]>}
+ */
+const getPostsFromRSS = async () => {
   const RSS_URL = `http://feeds.feedburner.com/abseilio`;
 
   return fetch(RSS_URL)
     .then((response) => response.text())
-    .then((str) => wrangleTipsXML(str));
+    .then((str) => wranglePostsXML(str));
 };
 
-const wrangleTipsXML = (str) => {
+/**
+ * @param {string} str The raw XML from the Abseil blog.
+ * @returns {Post[]}
+ */
+const wranglePostsXML = (str) => {
   const parser = new XMLParser();
-  const tips = parser.parse(str).rss.channel.item.filter((item) => {
+  let posts = parser.parse(str).rss.channel.item.filter((item) => {
+    // For now, we'll only check for regular tips and performance tips
+    // as those are the only types of tips on the Abseil blog.
+    // If a post is a performance tip, the title will always
+    // start with 'Performance'.
     return (
       item.title.includes("Tip of the Week") &&
       (item.title.indexOf("Tip") === 0 ||
@@ -18,33 +36,62 @@ const wrangleTipsXML = (str) => {
     );
   });
 
-  // Just use the tip number as the ID for the database.
-  tips.forEach((tip) => (tip.id = getTipItemNumber(tip)));
+  // We'll need to assign our own ID instead of relying on the
+  // database to make one for us. This is because the RSS doesn't
+  // tell us what blog posts are "new" or not, so we just need
+  // to collect all of them and let the database check for uniqueness.
+  // Autoincrementing DB IDs will never reject already inserted posts.
+  posts.forEach((post) => (post.id = generatePostID(post)));
 
-  // Unfortunately the RSS we get back has duplicate entries.
-  return removeDuplicateTips(tips);
+  // The RSS unfortunately gives us back duplicates.
+  return removeDuplicatePosts(posts);
 };
 
-const removeDuplicateTips = (tips) => {
-  const tipSet = new Set();
-  return tips.filter((tip) => {
-    if (tipSet.has(tip.id)) return false;
-    tipSet.add(tip.id);
+/**
+ * @param {Post[]} posts
+ * @returns A new array without duplicate posts.
+ */
+const removeDuplicatePosts = (posts) => {
+  const set = new Set();
+  return posts.filter((post) => {
+    if (set.has(post.id)) return false;
+    set.add(post.id);
     return true;
   });
 };
 
-// Abseil Tip of the Week titles take the form of
-// "Tip of the Week #{Number}: Some title"
-const getTipItemNumber = (item) => {
-  const title = item.title;
+/**
+ * @param {Post} post
+ * @returns {int}
+ */
+const generatePostID = (post) => {
+  /**
+   * Note that post titles look something like:
+   * 'Tip of the Week #{Number}: Some title'
+   * The post number should suffice as an ID.
+   */
+  const title = post.title;
   const start = title.indexOf("#") + 1;
   const end = title.indexOf(":");
   let ID = Number(title.substring(start, end));
-  if (item.title.indexOf("Performance") === 0) return 10000 + ID;
+
+  /**
+   * Recently, there have been a new category of tips called
+   * performance tips. These post numbers can overlap with the
+   * already existing more general posts. We'll just add an
+   * offset as a quick and dirty solution - if we need
+   * more categories, we can add more offsets for each.
+   *
+   * Performance tips will have titles that start with
+   * "Performance".
+   */
+  const PERFORMANCE_ID_OFFSET = 10000;
+  if (post.title.indexOf("Performance") === 0)
+    return PERFORMANCE_ID_OFFSET + ID;
+
   return ID;
 };
 
 module.exports = {
-  getTipsFromRSS,
+  getPostsFromRSS,
 };
