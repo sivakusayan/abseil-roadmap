@@ -2,8 +2,7 @@
  * @file Logic relevant to interacting with the database.
  */
 
-const { Pool } = require("pg");
-const format = require("pg-format");
+const mysql = require('mysql2');
 const cron = require("node-cron");
 
 const { getPostsFromRSS } = require("./datasource");
@@ -11,63 +10,50 @@ const { getPostsFromRSS } = require("./datasource");
 let pool;
 
 const init = () => {
-  const clientConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-  };
-  pool = new Pool(clientConfig);
+  pool = mysql.createPool(process.env.DATABASE_CONNECTION_STRING);
   syncPostsTableWithSource();
 };
 
-const getPost = async ({ fields, id }) => {
-  if (!fields) fields = "*";
-  const query = format("SELECT %s from posts WHERE id=%s", fields, id);
-  return await sendQuery(query);
+const getPost = async (id) => {
+  return await sendQuery("SELECT * from posts WHERE id=?", [id]);
 };
 
-const getAllPosts = async ({ fields }) => {
-  if (!fields) fields = "*";
-  const query = format("SELECT %s from posts ORDER BY id ASC", fields);
-  return await sendQuery(query);
+const getAllPosts = async () => {
+  // TODO: Investigate why we can't pass columns as parameterized query here.
+  return await sendQuery("SELECT id,title_html from posts ORDER BY id ASC");
 };
 
 /**
- * @param {string} query Query to execute. Note that you
- * MUST create this string using the pg-format library
- * to prevent SQL injections.
+ * @param {string} query A parameterized query.
+ * @param {any[]} values The values for the parameterized query.
  * @returns The result of the query.
  */
-const sendQuery = async (query) => {
+const sendQuery = async (query, values) => {
   let res;
-  const client = await pool.connect();
   try {
-    res = await client.query(query);
+    res = await pool.promise().execute(query, values);
   } catch (e) {
     console.error("Couldn't execute query: ", e);
-  } finally {
-    client.release();
   }
-  return res ? res.rows : [];
+
+  return res ? res[0] : [];
 };
 
 /**
- * @param {string} transaction transaction to execute. Note that you
- * MUST create this string using the pg-format library
- * to prevent SQL injections.
+ * @param {string} query A parameterized query.
+ * @param {any[]} values The values for the parameterized query.
  */
-const sendTransactionQuery = async (transaction) => {
-  const client = await pool.connect();
+const sendTransactionQuery = async (query, values) => {
+  const connection = await pool.promise().getConnection();
   try {
-    await client.query("BEGIN");
-    await client.query(transaction);
-    await client.query("COMMIT");
+    await connection.query("BEGIN");
+    await connection.query(query, [values]);
+    await connection.query("COMMIT");
   } catch (e) {
-    await client.query("ROLLBACK");
+    await connection.query("ROLLBACK");
     console.error("Couldn't execute transaction query: ", e);
   } finally {
-    client.release();
+    connection.release();
   }
 };
 
@@ -82,7 +68,7 @@ const syncPostsTableWithSource = async () => {
     tip.title,
     tip.description,
     tip.pubDate,
-    tip.link,
+    tip.link
   ]);
 
   /**
@@ -91,15 +77,13 @@ const syncPostsTableWithSource = async () => {
    * posts. The other fields are unlikely to be
    * changed.
    */
-  const query = format(
-    `INSERT INTO posts 
-        (id, title_html, content_html, pub_date, link) 
-    VALUES %L 
-    ON CONFLICT (id) 
-        DO UPDATE SET content_html = EXCLUDED.content_html`,
-    values
-  );
-  sendTransactionQuery(query);
+  const query = `
+  INSERT INTO posts 
+    (id, title_html, content_html, pub_date, link) 
+  VALUES ?
+  ON DUPLICATE KEY UPDATE 
+    content_html = VALUES(content_html)`;
+  sendTransactionQuery(query, values);
 };
 cron.schedule("0 0 0 * * *", () => syncPostsTableWithSource);
 

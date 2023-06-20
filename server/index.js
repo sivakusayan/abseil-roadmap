@@ -7,11 +7,14 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.get("/api/posts", async (req, res) => {
-  const { id, fields } = req.query;
   let json;
 
-  if (id) json = await getPost({ id, fields });
-  else json = await getAllPosts({ fields });
+  if (req.query.id) {
+    json = await getPost(req.query.id);
+  }
+  else {
+    json = await getAllPosts();
+  }
 
   res.json(json);
 });
