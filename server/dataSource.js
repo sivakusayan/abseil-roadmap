@@ -12,10 +12,17 @@ const { XMLParser } = require("fast-xml-parser");
  */
 const getPostsFromRSS = async () => {
   const RSS_URL = `http://feeds.feedburner.com/abseilio`;
+  let res;
 
-  return fetch(RSS_URL)
-    .then((response) => response.text())
-    .then((str) => wranglePostsXML(str));
+  try {
+    res = fetch(RSS_URL)
+      .then((response) => response.text())
+      .then((str) => wranglePostsXML(str));
+  } catch (e) {
+    console.error("Failed to fetch post XML: ", e);
+  }
+
+  return res;
 };
 
 /**
@@ -27,10 +34,12 @@ const wranglePostsXML = (str) => {
   let posts = parser.parse(str).rss.channel.item;
   if (!Array.isArray(posts)) posts = [posts];
   posts = posts.filter((item) => {
-    // For now, we'll only check for regular tips and performance tips
-    // as those are the only types of tips on the Abseil blog.
-    // If a post is a performance tip, the title will always
-    // start with 'Performance'.
+    /**
+     * For now, we'll only check for regular tips and performance tips
+     * as those are the only types of tips on the Abseil blog.
+     * If a post is a performance tip, the title will always
+     * start with 'Performance'.
+     */
     return (
       item.title.includes("Tip of the Week") &&
       (item.title.indexOf("Tip") === 0 ||
@@ -38,11 +47,13 @@ const wranglePostsXML = (str) => {
     );
   });
 
-  // We'll need to assign our own ID instead of relying on the
-  // database to make one for us. This is because the RSS doesn't
-  // tell us what blog posts are "new" or not, so we just need
-  // to collect all of them and let the database check for uniqueness.
-  // Autoincrementing DB IDs will never reject already inserted posts.
+  /**
+   * We'll need to assign our own ID instead of relying on the
+   * database to make one for us. This is because the RSS doesn't
+   * tell us what blog posts are "new" or not, so we just need
+   * to collect all of them and let the database check for uniqueness.
+   * Autoincrementing DB IDs will never reject already inserted posts.
+   */
   posts.forEach((post) => (post.id = generatePostID(post)));
 
   posts.forEach((post) => {

@@ -30,32 +30,42 @@ const getPost = async ({ fields, id }) => {
 const getAllPosts = async ({ fields }) => {
   if (!fields) fields = "*";
   const query = format("SELECT %s from posts ORDER BY id ASC", fields);
-  console.log(query);
   return await sendQuery(query);
 };
 
+/**
+ * @param {string} query Query to execute. Note that you
+ * MUST create this string using the pg-format library
+ * to prevent SQL injections.
+ * @returns The result of the query.
+ */
 const sendQuery = async (query) => {
   let res;
   const client = await pool.connect();
   try {
     res = await client.query(query);
   } catch (e) {
-    throw e;
+    console.error("Couldn't execute query: ", e);
   } finally {
     client.release();
   }
-  return res.rows;
+  return res ? res.rows : [];
 };
 
+/**
+ * @param {string} transaction transaction to execute. Note that you
+ * MUST create this string using the pg-format library
+ * to prevent SQL injections.
+ */
 const sendTransactionQuery = async (transaction) => {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
-    const rest = await client.query(transaction);
+    await client.query(transaction);
     await client.query("COMMIT");
   } catch (e) {
     await client.query("ROLLBACK");
-    throw e;
+    console.error("Couldn't execute transaction query: ", e);
   } finally {
     client.release();
   }
@@ -74,10 +84,13 @@ const syncPostsTableWithSource = async () => {
     tip.pubDate,
     tip.link,
   ]);
-  // Let's make sure to always update the content
-  // in case the Abseil website updated one of the
-  // posts. The other fields are unlikely to be
-  // changed.
+
+  /**
+   * Let's make sure to always update the content
+   * in case the Abseil website updated one of the
+   * posts. The other fields are unlikely to be
+   * changed.
+   */
   const query = format(
     `INSERT INTO posts 
         (id, title_html, content_html, pub_date, link) 
