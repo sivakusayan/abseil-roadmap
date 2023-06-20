@@ -24,7 +24,9 @@ const getPostsFromRSS = async () => {
  */
 const wranglePostsXML = (str) => {
   const parser = new XMLParser();
-  let posts = parser.parse(str).rss.channel.item.filter((item) => {
+  let posts = parser.parse(str).rss.channel.item;
+  if (!Array.isArray(posts)) posts = [posts];
+  posts = posts.filter((item) => {
     // For now, we'll only check for regular tips and performance tips
     // as those are the only types of tips on the Abseil blog.
     // If a post is a performance tip, the title will always
