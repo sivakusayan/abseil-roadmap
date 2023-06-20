@@ -45,6 +45,11 @@ const wranglePostsXML = (str) => {
   // Autoincrementing DB IDs will never reject already inserted posts.
   posts.forEach((post) => (post.id = generatePostID(post)));
 
+  posts.forEach((post) => {
+    // We can trim down on size even more by removing class names.
+    post.description = post.description.replace(/class="(.*?)"/gi, "");
+  });
+
   // The RSS unfortunately gives us back duplicates.
   return removeDuplicatePosts(posts);
 };
