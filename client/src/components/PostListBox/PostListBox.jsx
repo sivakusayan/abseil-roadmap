@@ -1,7 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
 import style from "./PostListBox.css";
 
-export default function PostListBox({ setActivePostId }) {
+import PostListItem from "../PostListItem/PostListItem";
+
+export default function PostListBox({ activePostId, setActivePostId }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -10,19 +12,14 @@ export default function PostListBox({ setActivePostId }) {
       .then((posts) => setPosts(posts));
   }, []);
 
-  const handleListItemClick = (e) => {
-    setActivePostId(e.target.closest("li").id);
-  }
-
   return (
-    <ul class={style.posts + " menu"}>
+    <ul class={style.posts}>
       {!posts ? "Loading..." : posts.map(post =>
-        <li
-          id={post.id}
+        <PostListItem
           key={post.id}
-          class={style["post-item"]}
-          onClick={handleListItemClick}
-          dangerouslySetInnerHTML={{ __html: post.title_html.replace("Tip of the Week ", "Tip ") }}
+          post={post}
+          activePostId={activePostId}
+          setActivePostId={setActivePostId}
         />
       )}
     </ul>

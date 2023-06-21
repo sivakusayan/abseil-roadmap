@@ -2494,8 +2494,6 @@ summary.accordion-header::-webkit-details-marker {
     margin: 0;
     min-width: 180px;
     padding: .4rem;
-    transform: translateY(.2rem);
-    z-index: 300
 }
 
 .menu.menu-nav {

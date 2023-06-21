@@ -1,3 +1,5 @@
+import "preact/debug";
+
 import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 
@@ -26,6 +28,7 @@ export default function App() {
   return (
     <Fragment>
       <PostListBox
+        activePostId={activePostId}
         setActivePostId={setActivePostId}
       />
       <PostView

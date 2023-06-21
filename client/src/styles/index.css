@@ -2,7 +2,7 @@
 	--background-color: #fff;
 	--text-color: #000;
 
-	--post-list-background-color: rgb(246, 246, 246);
+	--post-list-background-color: #f7f8f9;
 	--post-list-divider-color: rgb(209, 207, 207);
 
 	--scrollbar-color: #000;
@@ -20,6 +20,8 @@
 
 html,
 body {
+	margin: 0;
+	padding: 0;
 	scrollbar-gutter: stable !important;
 }
 
@@ -37,13 +39,13 @@ body {
 }
 
 body::-webkit-scrollbar-track {
-	background: var(--scrollbar-color);
+	background: var(--background-color);
 }
 
 body::-webkit-scrollbar-thumb {
-	background-color: var(--background-color);
+	background-color: var(--scrollbar-color);
 	border-radius: 6px;
-	border: 3px solid var(--scrollbar-color);
+	border: 3px solid var(--background-color);
 }
 
 pre {

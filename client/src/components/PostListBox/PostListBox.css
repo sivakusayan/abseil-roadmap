@@ -1,5 +1,5 @@
 .posts {
-    flex-basis: 25%;
+    flex-basis: 20%;
     overflow-y: scroll;
     overscroll-behavior: contain;
     position: sticky;
@@ -7,6 +7,7 @@
     height: 100vh;
     background-color: var(--post-list-background-color);
     margin: 0;
+    border-right: 1px solid rgb(233 231 231);
 }
 
 .posts::-webkit-scrollbar {
@@ -26,16 +27,4 @@
     background-color: var(--scrollbar-color);
     border-radius: 6px;
     border: 3px solid var(--post-list-background-color);
-}
-
-.posts .post-item:not(:first-child) {
-    border-top: 1px solid var(--post-list-divider-color);
-}
-
-.posts .post-item {
-    padding: 0.5rem;
-}
-
-.posts .post-item:first-child {
-    margin-top: 0;
 }
