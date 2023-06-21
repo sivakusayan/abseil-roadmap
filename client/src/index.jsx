@@ -1,6 +1,12 @@
+import { Fragment } from 'preact';
+import { useState } from 'preact/hooks';
+
+import PostListBox from "./components/PostListBox/PostListBox";
+import PostView from "./components/PostView/PostView";
+
 import "./styles/reset.css";
 import "./styles/index.css";
-import PostListBox from "./components/PostListBox/PostListBox";
+import "./styles/typography.css";
 
 /**
  * Tip test thing.
@@ -16,7 +22,16 @@ import PostListBox from "./components/PostListBox/PostListBox";
  */
 
 export default function App() {
+  const [activePostId, setActivePostId] = useState(null);
+
   return (
-    <PostListBox />
+    <Fragment>
+      <PostListBox
+        setActivePostId={setActivePostId}
+      />
+      <PostView
+        activePostId={activePostId}
+      />
+    </Fragment>
   );
 }

@@ -15,7 +15,8 @@ const init = () => {
 };
 
 const getPost = async (id) => {
-  return await sendQuery("SELECT * from posts WHERE id=?", [id]);
+  const res = await sendQuery("SELECT * from posts WHERE id=?", [id]);
+  return res[0];
 };
 
 const getAllPosts = async () => {

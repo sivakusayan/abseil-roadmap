@@ -1,3 +1,35 @@
 .posts li {
-    
+    border-top: 1px solid rgb(209, 207, 207);
+    padding: 1rem;
+}
+
+.posts {
+    flex-basis: 20%;
+    border-right: 1px solid black;
+    height: 100vh;
+    overflow-y: scroll;
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.posts::-webkit-scrollbar {
+    width: 11px;
+}
+
+.posts {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+.posts::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+.posts::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG);
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
 }
