@@ -15,11 +15,12 @@ export default function PostListBox({ setActivePostId }) {
   }
 
   return (
-    <ul class={style.posts}>
+    <ul class={style.posts + " menu"}>
       {!posts ? "Loading..." : posts.map(post =>
         <li
           id={post.id}
           key={post.id}
+          class={style["post-item"]}
           onClick={handleListItemClick}
           dangerouslySetInnerHTML={{ __html: post.title_html.replace("Tip of the Week ", "Tip ") }}
         />

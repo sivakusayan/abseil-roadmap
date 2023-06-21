@@ -1,22 +1,16 @@
-.posts li {
-    border-top: 1px solid rgb(209, 207, 207);
-    padding: 1rem;
-}
-
 .posts {
-    flex-basis: 20%;
-    border-right: 1px solid black;
-    height: 100vh;
+    flex-basis: 25%;
     overflow-y: scroll;
+    overscroll-behavior: contain;
     position: sticky;
     top: 0;
-    left: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    height: calc(100vh);
+    border-radius: 0.4rem;
+    background-color: rgb(246, 246, 246);
 }
 
 .posts::-webkit-scrollbar {
-    width: 11px;
+    width: 8px;
 }
 
 .posts {
@@ -25,11 +19,23 @@
 }
 
 .posts::-webkit-scrollbar-track {
-    background: var(--scrollbarBG);
+    background-color: rgb(246, 246, 246);
 }
 
 .posts::-webkit-scrollbar-thumb {
     background-color: var(--thumbBG);
     border-radius: 6px;
     border: 3px solid var(--scrollbarBG);
+}
+
+.posts .post-item:not(:first-child) {
+    border-top: 1px solid rgb(209, 207, 207);
+}
+
+.posts .post-item {
+    padding: 0.5rem;
+}
+
+.posts .post-item:first-child {
+    margin-top: 0;
 }

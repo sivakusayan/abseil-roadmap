@@ -35,22 +35,31 @@ body::-webkit-scrollbar-thumb {
 	border: 3px solid var(--scrollbarBG);
 }
 
-
-pre,
-code {
-	background-color: rgb(230, 230, 230);
-	border-radius: 5px;
-}
-
 pre {
 	padding: 1rem;
-}
-
-code {
-	padding: 0.15rem;
+	background-color: rgba(0, 0, 0, .05);
 }
 
 pre code {
 	padding: 0;
 	background-color: transparent;
+}
+
+li p {
+	display: inline;
+	margin-bottom: 0;
+}
+
+.bad-code {
+	position: relative;
+	padding-top: 4rem;
+}
+
+.bad-code::before {
+	position: absolute;
+	top: 1rem;
+	content: "Bad code";
+	padding: 0.2rem 0.8rem;
+	background-color: #fedada;
+	border-radius: 15px;
 }

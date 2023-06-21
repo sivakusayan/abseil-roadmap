@@ -1,12 +1,11 @@
 import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 
+import "./styles/typography.css";
+import "./styles/index.css";
+
 import PostListBox from "./components/PostListBox/PostListBox";
 import PostView from "./components/PostView/PostView";
-
-import "./styles/reset.css";
-import "./styles/index.css";
-import "./styles/typography.css";
 
 /**
  * Tip test thing.
