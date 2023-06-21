@@ -1,3 +1,19 @@
+:root {
+	--background-color: #fff;
+	--text-color: #000;
+
+	--post-list-background-color: rgb(246, 246, 246);
+	--post-list-divider-color: rgb(209, 207, 207);
+
+	--scrollbar-color: #000;
+
+	--code-background-color: rgba(0, 0, 0, .05);
+	--code-text-color: #3b4351;
+	--bad-code-background-color: #fcf2f2;
+	--bad-code-text-color: #d73e48;
+	--bad-code-warning-background-color: #fedada;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -11,33 +27,28 @@ body {
 	display: flex;
 }
 
-html {
-	--scrollbarBG: #fff;
-	--thumbBG: black;
-}
-
 body::-webkit-scrollbar {
 	width: 11px;
 }
 
 body {
 	scrollbar-width: thin;
-	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+	scrollbar-color: var(--scrollbar-color) var(--background-color);
 }
 
 body::-webkit-scrollbar-track {
-	background: var(--scrollbarBG);
+	background: var(--scrollbar-color);
 }
 
 body::-webkit-scrollbar-thumb {
-	background-color: var(--thumbBG);
+	background-color: var(--background-color);
 	border-radius: 6px;
-	border: 3px solid var(--scrollbarBG);
+	border: 3px solid var(--scrollbar-color);
 }
 
 pre {
 	padding: 1rem;
-	background-color: rgba(0, 0, 0, .05);
+	background-color: var(--code-background-color);
 }
 
 pre code {
@@ -60,6 +71,6 @@ li p {
 	top: 1rem;
 	content: "Bad code";
 	padding: 0.2rem 0.8rem;
-	background-color: #fedada;
+	background-color: var(--bad-code-warning-background-color);
 	border-radius: 15px;
 }

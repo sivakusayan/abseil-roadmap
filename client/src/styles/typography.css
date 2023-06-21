@@ -262,6 +262,18 @@ a:visited {
     color: #807fe2
 }
 
+h1 {
+    margin-top: 0rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 2rem;
+}
+
 h1,
 h2,
 h3,
@@ -272,16 +284,6 @@ h6 {
     font-weight: 500;
     line-height: 1.2;
     margin-bottom: .5em;
-    margin-top: 0
-}
-
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-    font-weight: 500
 }
 
 .h1,
@@ -1372,29 +1374,8 @@ code {
     padding: .1rem .2rem
 }
 
-.code {
-    border-radius: .1rem;
-    color: #3b4351;
-    position: relative
-}
-
-.code::before {
-    color: #bcc3ce;
-    content: attr(data-lang);
-    font-size: .7rem;
-    position: absolute;
-    right: .4rem;
-    top: .1rem
-}
-
-.code code {
-    background: #f7f8f9;
-    color: inherit;
-    display: block;
-    line-height: 1.5;
-    overflow-x: auto;
-    padding: 1rem;
-    width: 100%
+pre code {
+    font-size: 100%;
 }
 
 .img-responsive {

@@ -6,7 +6,7 @@
     top: 0;
     height: calc(100vh);
     border-radius: 0.4rem;
-    background-color: rgb(246, 246, 246);
+    background-color: var(--post-list-background-color);
 }
 
 .posts::-webkit-scrollbar {
@@ -15,21 +15,21 @@
 
 .posts {
     scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+    scrollbar-color: var(--scrollbar-color) var(--post-list-background-color);
 }
 
 .posts::-webkit-scrollbar-track {
-    background-color: rgb(246, 246, 246);
+    background: var(--post-list-background-color);
 }
 
 .posts::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG);
+    background-color: var(--scrollbar-color);
     border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
+    border: 3px solid var(--post-list-background-color);
 }
 
 .posts .post-item:not(:first-child) {
-    border-top: 1px solid rgb(209, 207, 207);
+    border-top: 1px solid var(--post-list-divider-color);
 }
 
 .posts .post-item {
