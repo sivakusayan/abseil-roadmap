@@ -74,3 +74,11 @@ li p {
 	background-color: var(--bad-code-warning-background-color);
 	border-radius: 15px;
 }
+
+aside {
+	margin: 0 0 2rem;
+}
+
+aside p {
+	margin-bottom: 0.2rem;
+}
