@@ -4,9 +4,9 @@
     overscroll-behavior: contain;
     position: sticky;
     top: 0;
-    height: calc(100vh);
-    border-radius: 0.4rem;
+    height: 100vh;
     background-color: var(--post-list-background-color);
+    margin: 0;
 }
 
 .posts::-webkit-scrollbar {

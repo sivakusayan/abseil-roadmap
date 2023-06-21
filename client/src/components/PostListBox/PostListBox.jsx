@@ -2,7 +2,7 @@ import { useState, useEffect } from "preact/hooks";
 import style from "./PostListBox.css";
 
 export default function PostListBox({ setActivePostId }) {
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     fetch("/api/posts")

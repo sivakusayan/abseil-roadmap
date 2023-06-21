@@ -2,6 +2,8 @@ import { useState, useEffect } from "preact/hooks";
 import style from "./PostView.css";
 import { Fragment } from "preact";
 
+import WelcomePost from "../WelcomePost/WelcomePost";
+
 export default function PostView({ activePostId }) {
     const [post, setPost] = useState(null);
 
@@ -15,7 +17,7 @@ export default function PostView({ activePostId }) {
 
     return (
         <main class={style["post-view"]}>
-            {!post ? "Loading..." :
+            {!post ? <WelcomePost /> :
                 <Fragment>
                     <h1 dangerouslySetInnerHTML={{ __html: post.title_html }} />
                     { /** Unfortunately, Fragments don't support dangerouslySetInnerHTML */}
