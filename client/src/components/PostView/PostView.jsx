@@ -41,8 +41,14 @@ export default function PostView({ activePostId, isPostRead, updatePostRead }) {
                     <h1 dangerouslySetInnerHTML={{ __html: post.title_html }} />
                     { /** Unfortunately, Fragments don't support dangerouslySetInnerHTML */}
                     <div dangerouslySetInnerHTML={{ __html: post.content_html }} />
-                    <button onClick={handleToggleButtonClick}>{isPostRead ? "Mark Unread" : "Mark Read"}</button>
-                    <a target="_blank" href={post.link}>Original source (opens in new window)</a>
+                    <div class={style["post-footer"]}>
+                        <button
+                            class={"btn" + (isPostRead ? " btn-primary" : "")}
+                            onClick={handleToggleButtonClick}>
+                            {isPostRead ? "Mark Unread" : "Mark Read"}
+                        </button>
+                        <a rel="noopener" target="_blank" href={post.link}>Original source (opens in new window)</a>
+                    </div>
                 </Fragment>
             }
         </main>
