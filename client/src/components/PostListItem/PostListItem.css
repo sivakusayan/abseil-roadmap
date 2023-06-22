@@ -7,7 +7,7 @@
     margin-top: 0;
     cursor: pointer;
 
-    transition: background-color 0.2s, color 0.2s, padding 0.2s;
+    transition: background-color 0.2s, color 0.2s, padding 0.2s, border-radius 0.1s;
 }
 
 .post-item:hover {
@@ -15,7 +15,21 @@
 }
 
 .post-item--active {
-    background-color: var(--text-color);
+    background-color: var(--color-800);
     color: var(--post-list-background-color);
-    padding: 2rem 0.7rem;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.post-item--active:first-child {
+    border-top-right-radius: 0px;
+}
+
+.post-item--active:last-child {
+    border-bottom-right-radius: 0px;
+}
+
+.post-item--active code {
+    color: var(--code-background-color);
+    background-color: var(--code-text-color);
 }

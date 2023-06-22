@@ -1,14 +1,26 @@
 :root {
-	--background-color: #fff;
-	--text-color: #000;
+	--color-000: #FFF;
+	--color-100: #F3F4F8;
+	--color-200: #D2D4DA;
+	--color-300: #B3B4BD;
+	--color-400: #9496A1;
+	--color-500: #777986;
+	--color-600: #5B5D6b;
+	--color-700: #404252;
+	--color-800: #282A3A;
+	--color-900: #101223;
 
-	--post-list-background-color: #f7f8f9;
-	--post-list-divider-color: rgb(209, 207, 207);
+	--background-color: var(--color-100);
+	--text-color: var(--color-900);
+	--link-text-color: #5755d9;
 
-	--scrollbar-color: #000;
+	--post-list-background-color: var(--color-100);
+	--post-list-divider-color: var(--color-200);
 
-	--code-background-color: rgba(0, 0, 0, .05);
-	--code-text-color: #3b4351;
+	--scrollbar-color: var(--color-900);
+
+	--code-background-color: var(--color-100);
+	--code-text-color: var(--text-color);
 	--bad-code-background-color: #fcf2f2;
 	--bad-code-text-color: #d73e48;
 	--bad-code-warning-background-color: #fedada;
@@ -48,39 +60,15 @@ body::-webkit-scrollbar-thumb {
 	border: 3px solid var(--background-color);
 }
 
-pre {
-	padding: 1rem;
-	background-color: var(--code-background-color);
+a[href],
+a[href] code {
+	text-decoration: none;
+	border-bottom: 1.5px solid;
+	color: var(--link-text-color);
+	transition: border-width 0.1s;
 }
 
-pre code {
-	padding: 0;
-	background-color: transparent;
-}
-
-li p {
-	display: inline;
-	margin-bottom: 0;
-}
-
-.bad-code {
-	position: relative;
-	padding-top: 4rem;
-}
-
-.bad-code::before {
-	position: absolute;
-	top: 1rem;
-	content: "Bad code";
-	padding: 0.2rem 0.8rem;
-	background-color: var(--bad-code-warning-background-color);
-	border-radius: 15px;
-}
-
-aside {
-	margin: 0 0 2rem;
-}
-
-aside p {
-	margin-bottom: 0.2rem;
+a[href]:hover,
+a[href]:hover code {
+	border-bottom-width: 5px;
 }
