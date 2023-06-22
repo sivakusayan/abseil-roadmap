@@ -42,7 +42,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-	width: 11px;
+	width: 10px;
 }
 
 body {
