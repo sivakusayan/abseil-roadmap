@@ -43,7 +43,7 @@ export default function PostView({ activePostId, isPostRead, updatePostRead }) {
                     <div dangerouslySetInnerHTML={{ __html: post.content_html }} />
                     <div class={style["post-footer"]}>
                         <button
-                            class={"btn" + (isPostRead ? " btn-primary" : "")}
+                            class={"btn" + (isPostRead ? "" : " btn-primary")}
                             onClick={handleToggleButtonClick}>
                             {isPostRead ? "Mark Unread" : "Mark Read"}
                         </button>

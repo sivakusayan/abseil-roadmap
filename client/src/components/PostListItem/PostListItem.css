@@ -69,6 +69,7 @@ svg {
 
 .post-item--active path {
     stroke: var(--post-list-background-color);
+    stroke-width: 5px;
 }
 
 .draw {

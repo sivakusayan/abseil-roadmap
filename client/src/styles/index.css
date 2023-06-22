@@ -79,6 +79,46 @@ p {
 	margin: 0 0 1.2rem
 }
 
+pre,
+code {
+	border-radius: 3px;
+}
+
+pre {
+	padding: 1rem;
+	background-color: var(--code-background-color);
+}
+
+code {
+	background-color: var(--code-background-color);
+	color: var(--code-text-color);
+	transition: background-color 0.2s, color 0.2s, padding 0.2s, border-radius 0.1s;
+}
+
+pre code {
+	padding: 0;
+	background-color: transparent;
+}
+
+li p {
+	display: inline;
+	margin-bottom: 0;
+}
+
+.bad-code {
+	position: relative;
+	padding-top: 4rem;
+}
+
+.bad-code::before {
+	position: absolute;
+	top: 1rem;
+	content: "Bad code";
+	padding: 0.2rem 0.8rem;
+	background-color: var(--bad-code-warning-background-color);
+	border-radius: 15px;
+}
+
 button {
 	position: relative;
 	width: 6rem;
@@ -98,7 +138,7 @@ button::before {
 	z-index: -1;
 }
 
-button.btn-primary::before {
+button:not(.btn-primary)::before {
 	animation: 0.8s pulse;
 	animation-fill-mode: forwards;
 }
