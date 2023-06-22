@@ -3,7 +3,7 @@ import style from "./PostListBox.css";
 
 import PostListItem from "../PostListItem/PostListItem";
 
-export default function PostListBox({ activePostId, setActivePostId }) {
+export default function PostListBox({ activePostId }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ export default function PostListBox({ activePostId, setActivePostId }) {
           key={post.id}
           post={post}
           activePostId={activePostId}
-          setActivePostId={setActivePostId}
         />
       )}
     </ul>

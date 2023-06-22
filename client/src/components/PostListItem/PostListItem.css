@@ -3,20 +3,27 @@
 }
 
 .post-item {
-    padding: 0.7rem;
     margin-top: 0;
-    cursor: pointer;
-
     transition: background-color 0.2s, color 0.2s, padding 0.2s, border-radius 0.1s;
 }
 
-.post-item:hover {
+.post-item a[href] {
+    padding: 0.7rem;
+    display: block;
+}
+
+.post-item a[href],
+.post-item a[href] code {
+    color: var(--text-color);
+    border-bottom: none;
+}
+
+.post-item:hover a[href] {
     text-decoration: underline;
 }
 
 .post-item--active {
     background-color: var(--color-800);
-    color: var(--post-list-background-color);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -29,7 +36,11 @@
     border-bottom-right-radius: 0px;
 }
 
-.post-item--active code {
+.post-item--active a[href] {
+    color: var(--post-list-background-color);
+}
+
+.post-item--active a[href] code {
     color: var(--code-background-color);
     background-color: var(--code-text-color);
 }
