@@ -1,8 +1,8 @@
 import style from "./PostListItem.css";
 
-export default function PostListItem({ post, activePostId }) {
+export default function PostListItem({ post, isActive, isRead }) {
     let className = style["post-item"];
-    if (activePostId === post.id) className += " " + style["post-item--active"];
+    if (isActive) className += " " + style["post-item--active"];
 
     return (
         <li
@@ -13,6 +13,7 @@ export default function PostListItem({ post, activePostId }) {
                 href={`/${post.id || ""}`}
                 dangerouslySetInnerHTML={{ __html: post.title_html.replace("Tip of the Week ", "Tip ") }}
             />
+            {isRead && "Read"}
         </li>
     );
 }

@@ -6,7 +6,9 @@ import PostView from "../PostView/PostView";
 
 export default function Home({ matches }) {
     const activePostId = Number(matches.postId);
-    const [readPosts, setReadPosts] = useState({});
+    const [readPosts, setReadPosts] = useState(
+        localStorage.getItem("readPosts") ? JSON.parse(localStorage.getItem("readPosts")) : {}
+    );
 
     const updatePostRead = (postId, isRead) => {
         const readPostsCopy = { ...readPosts };
@@ -17,6 +19,7 @@ export default function Home({ matches }) {
             delete readPostsCopy[postId];
         }
         setReadPosts(readPostsCopy)
+        localStorage.setItem("readPosts", JSON.stringify(readPostsCopy));
     }
 
     return (
