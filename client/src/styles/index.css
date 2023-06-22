@@ -65,7 +65,7 @@ a[href] code {
 	text-decoration: none;
 	border-bottom: 1.5px solid;
 	color: var(--link-text-color);
-	transition: border-width 0.1s;
+	transition: color 0.2s, background 0.2s, border-width 0.1s;
 }
 
 a[href]:hover,

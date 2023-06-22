@@ -10,7 +10,7 @@ export default function PostListItem({ post, activePostId }) {
             className={className}
         >
             <a
-                href={`/${post.id}`}
+                href={`/${post.id || ""}`}
                 dangerouslySetInnerHTML={{ __html: post.title_html.replace("Tip of the Week ", "Tip ") }}
             />
         </li>

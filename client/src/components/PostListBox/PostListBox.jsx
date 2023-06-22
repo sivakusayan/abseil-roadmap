@@ -4,12 +4,12 @@ import style from "./PostListBox.css";
 import PostListItem from "../PostListItem/PostListItem";
 
 export default function PostListBox({ activePostId }) {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([{ id: 0, title_html: "Home" }]);
 
   useEffect(() => {
     fetch("/api/posts")
       .then((res) => res.json())
-      .then((posts) => setPosts(posts));
+      .then((fetchedPosts) => setPosts([...posts, ...fetchedPosts]));
   }, []);
 
   return (

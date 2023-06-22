@@ -13,6 +13,9 @@ export default function PostView({ activePostId }) {
                 .then((res) => res.json())
                 .then((post) => setPost(post));
         }
+        else {
+            setPost(null);
+        }
     }, [activePostId]);
 
     return (
