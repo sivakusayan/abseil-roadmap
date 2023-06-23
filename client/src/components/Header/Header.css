@@ -1,0 +1,31 @@
+header {
+    height: 3rem;
+    background: var(--color-900);
+    color: var(--text-color);
+}
+
+header ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0;
+    transform: translateX(calc((100vw - 90ch - 10px)/2));
+    transition: transform 0.1s;
+}
+
+header li {
+    margin-top: 0;
+}
+
+header a[href] {
+    color: var(--color-200);
+}
+
+header a[href]:not(:hover) {
+    border-bottom: none;
+}
+
+.sidebar-is-active ul {
+    transform: translateX(calc(20vw + (80vw - 90ch - 10px)/2));
+}

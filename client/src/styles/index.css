@@ -12,7 +12,7 @@
 	--color-800: #282A3A;
 	--color-900: #101223;
 
-	--background-color: var(--color-100);
+	--background-color: var(--color-000);
 	--text-color: var(--color-900);
 	--link-text-color: #5755d9;
 
@@ -37,10 +37,7 @@ body {
 	margin: 0;
 	padding: 0;
 	scrollbar-gutter: stable !important;
-}
-
-body {
-	display: flex;
+	scroll-behavior: smooth;
 }
 
 body::-webkit-scrollbar {
@@ -77,6 +74,10 @@ a[href]:hover code {
 
 p {
 	margin: 0 0 1.2rem
+}
+
+li {
+	margin-top: 0.3rem;
 }
 
 pre,

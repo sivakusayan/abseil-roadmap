@@ -1,17 +1,44 @@
+import { useEffect, useRef } from "preact/hooks";
 import style from "./PostListItem.css";
 
 export default function PostListItem({ post, isActive, isRead }) {
+    const linkRef = useRef();
     let className = style["post-item"];
-    if (isActive) className += " " + style["post-item--active"];
+
+    const scrollIntoViewIfNeeded = (target) => {
+        if (target.getBoundingClientRect().bottom > window.innerHeight) {
+            target.scrollIntoView(false);
+        }
+
+        if (target.getBoundingClientRect().top < 0) {
+            target.scrollIntoView();
+        }
+    }
+
+    useEffect(() => {
+        if (isActive) {
+            /**
+             * Hack for chrome. Seems like the scrollIntoView implementation
+             * isn't ideal.
+             * https://github.com/facebook/react/issues/23396
+             */
+            setTimeout(() => scrollIntoViewIfNeeded(linkRef?.current), 10);
+        }
+    }, [isActive])
+
+    if (isActive) {
+        className += " " + style["post-item--active"];
+    };
     if (isRead) className += " " + style["post-item--read"];
 
     return (
         <li
             id={post.id}
             className={className}
+            ref={linkRef}
         >
             <a
-                href={`/${post.id || ""}`}
+                href={`/posts/${post.id || ""}`}
                 dangerouslySetInnerHTML={{ __html: post.title_html.replace("Tip of the Week ", "Tip ") }}
             />
             <div className={style["svg-container"]}>

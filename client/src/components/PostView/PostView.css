@@ -3,6 +3,7 @@
     max-width: 90ch;
     margin: auto;
     padding: 3rem 0;
+    position: relative;
 }
 
 aside {

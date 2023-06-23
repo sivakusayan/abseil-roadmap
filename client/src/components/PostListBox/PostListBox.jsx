@@ -2,9 +2,11 @@ import { useState, useEffect } from "preact/hooks";
 import style from "./PostListBox.css";
 
 import PostListItem from "../PostListItem/PostListItem";
+import { Fragment } from "preact";
+import Loader from "../Loader/Loader";
 
 export default function PostListBox({ activePostId, readPosts }) {
-  const [posts, setPosts] = useState([{ id: 0, title_html: "Home" }]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     fetch("/api/posts")
@@ -13,15 +15,18 @@ export default function PostListBox({ activePostId, readPosts }) {
   }, []);
 
   return (
-    <ul class={style.posts}>
-      {!posts ? "Loading..." : posts.map(post =>
-        <PostListItem
-          key={post.id}
-          post={post}
-          isActive={post.id === activePostId}
-          isRead={readPosts[post.id]}
-        />
-      )}
-    </ul>
+    <Fragment>
+      <Loader isLoading={posts.length === 1} />
+      <ul class={style.posts}>
+        {posts.length > 1 && posts.map(post =>
+          <PostListItem
+            key={post.id}
+            post={post}
+            isActive={post.id === activePostId || (!activePostId && post.id === posts[0].id)}
+            isRead={readPosts[post.id]}
+          />
+        )}
+      </ul>
+    </Fragment>
   );
 }

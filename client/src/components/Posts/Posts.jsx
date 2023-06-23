@@ -1,13 +1,20 @@
-import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
+import { route } from 'preact-router';
+
+import style from "./Posts.css";
 
 import PostListBox from "../PostListBox/PostListBox";
 import PostView from "../PostView/PostView";
 
 export default function Home({ matches }) {
-    const activePostId = Number(matches.postId);
+    let activePostId = Number(matches.postId);
+    if (!activePostId) {
+        activePostId = Number(localStorage.getItem("lastVisitedPostId")) || 1;
+        route(`/posts/${activePostId}`);
+    }
+
     const [readPosts, setReadPosts] = useState(
-        localStorage.getItem("readPosts") ? JSON.parse(localStorage.getItem("readPosts")) : {}
+        typeof window !== "undefined" && localStorage.getItem("readPosts") ? JSON.parse(localStorage.getItem("readPosts")) : {}
     );
 
     const updatePostRead = (postId, isRead) => {
@@ -19,11 +26,13 @@ export default function Home({ matches }) {
             delete readPostsCopy[postId];
         }
         setReadPosts(readPostsCopy)
-        localStorage.setItem("readPosts", JSON.stringify(readPostsCopy));
+        if (typeof window !== "undefined") {
+            localStorage.setItem("readPosts", JSON.stringify(readPostsCopy));
+        }
     }
 
     return (
-        <Fragment>
+        <div class={style["wrapper"]}>
             <PostListBox
                 activePostId={activePostId}
                 readPosts={readPosts}
@@ -33,6 +42,6 @@ export default function Home({ matches }) {
                 updatePostRead={updatePostRead}
                 isPostRead={readPosts[activePostId]}
             />
-        </Fragment>
+        </div>
     );
 }

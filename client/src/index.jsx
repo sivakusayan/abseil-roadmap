@@ -1,34 +1,40 @@
 import { Router, route } from "preact-router";
+import { useState, useEffect } from "preact/hooks";
+import { Fragment } from "preact";
 
 import "./styles/typography.css";
 import "./styles/index.css";
 
-import Home from "./components/Home/Home";
-import { useEffect } from "preact/hooks";
+import Header from "./components/Header/Header";
+import Posts from "./components/Posts/Posts";
+import WelcomePost from "./components/WelcomePost/WelcomePost";
 
 export default function App() {
+  const [isSidebarActive, setIsSidebarActive] = useState(false);
+
   const onRouteChange = e => {
-    /**
-     * We can't overwrite localstorage if this is initial navigation. 
-     * If we overwrite here, then we'll change localStorage before
-     * the useEffect handler can get to it. It should be okay if the
-     * user explicitly specified a post on initial navigation, though.
-     */
-    if (e.previous || e.matches.postId) {
+    if (e.matches?.postId) {
       localStorage.setItem("lastVisitedPostId", e.matches.postId);
     }
+    setIsSidebarActive(e.url.indexOf("/posts") === 0)
   }
 
   useEffect(() => {
     const lastVisitedPostId = localStorage.getItem("lastVisitedPostId");
     if (lastVisitedPostId) {
-      route("/" + lastVisitedPostId);
+      route("/posts/" + lastVisitedPostId);
     }
   }, []);
 
   return (
-    <Router onChange={onRouteChange}>
-      <Home path="/:postId?" />
-    </Router>
+    <Fragment>
+      <Header isSidebarActive={isSidebarActive} />
+      <main>
+        <Router onChange={onRouteChange}>
+          <WelcomePost path="/" />
+          <Posts path="/posts/:postId?" />
+        </Router>
+      </main>
+    </Fragment>
   );
 }

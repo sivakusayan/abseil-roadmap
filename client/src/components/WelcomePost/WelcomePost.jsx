@@ -1,17 +1,17 @@
-import { Fragment } from "preact";
 import style from "./WelcomePost.css";
 
 export default function WelcomePost() {
     return (
-        <Fragment>
+        <div class={style.wrapper}>
             <h1>Hello! This is a frontend wrapper around <a href="https://abseil.io/tips/">Abseil's C++ tips of the week</a> that augments its reading experience.</h1>
+            <span>This isn't an official website affiliated with the Abseil library, just a random side project of mine.</span>
             <div className={style.section}>
                 <h2>This website: </h2>
                 <ul>
+                    <li>Let's you choose between a dark and light theme.</li>
                     <li>Let's you mark what posts you have or haven't read so you don't waste time finding something new.</li>
                     <li>Saves off the post you last had open as well as what posts you've already read in <code>localstorage</code>.</li>
                     <li>Marks bad code with explicit "Bad code" text instead of just using color to pass <a href="https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html">WCAG Use of Color</a>.</li>
-                    <li>Is lighter and faster than the original. Not that the former was necessarily bloated, I just like seeing how small I can get a website.</li>
                 </ul>
             </div>
             <div className={style.section}>
@@ -41,6 +41,6 @@ export default function WelcomePost() {
                     I don't have access to all types of voice assistants, so if you find an issue on my site when using your program, please do <a href="https://github.com/sivakusayan/abseil-roadmap/issues">let me know</a>.
                 </p>
             </div>
-        </Fragment >
+        </div >
     );
 }
