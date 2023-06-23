@@ -8,10 +8,10 @@ export default function Header({ isSidebarActive }) {
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/posts">Posts</a>
+                    <a href="/settings">Settings</a>
                 </li>
                 <li>
-                    <a href="/">Settings</a>
+                    <a href="/posts">Posts</a>
                 </li>
             </ul>
         </header>

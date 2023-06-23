@@ -4,7 +4,6 @@ import { route } from "preact-router";
 
 import style from "./PostView.css";
 import Loader from "../Loader/Loader";
-import WelcomePost from "../WelcomePost/WelcomePost";
 
 export default function PostView({ activePostId, isPostRead, updatePostRead }) {
     const [post, setPost] = useState(null);

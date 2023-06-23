@@ -6,8 +6,9 @@ import "./styles/typography.css";
 import "./styles/index.css";
 
 import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
 import Posts from "./components/Posts/Posts";
-import WelcomePost from "./components/WelcomePost/WelcomePost";
+import Settings from "./components/Settings/Settings";
 
 export default function App() {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
@@ -31,8 +32,9 @@ export default function App() {
       <Header isSidebarActive={isSidebarActive} />
       <main>
         <Router onChange={onRouteChange}>
-          <WelcomePost path="/" />
+          <Home path="/" />
           <Posts path="/posts/:postId?" />
+          <Settings path="/settings" />
         </Router>
       </main>
     </Fragment>

@@ -6,7 +6,7 @@ import style from "./Posts.css";
 import PostListBox from "../PostListBox/PostListBox";
 import PostView from "../PostView/PostView";
 
-export default function Home({ matches }) {
+export default function Posts({ matches }) {
     let activePostId = Number(matches.postId);
     if (!activePostId) {
         activePostId = Number(localStorage.getItem("lastVisitedPostId")) || 1;

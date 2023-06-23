@@ -11,7 +11,7 @@ header ul {
     gap: 2rem;
     padding: 1rem 0;
     transform: translateX(calc((100vw - 90ch - 10px)/2));
-    transition: transform 0.1s;
+    transition: transform 0.2s;
 }
 
 header li {
