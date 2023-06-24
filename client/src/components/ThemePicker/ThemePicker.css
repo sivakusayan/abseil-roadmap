@@ -1,0 +1,40 @@
+select {
+    width: 7.5rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    appearance: none;
+
+    transition: color 0.2s ease,
+        background-color 0.2s ease;
+    border: 1px solid var(--text-color);
+
+    outline: 3px solid transparent;
+    outline-offset: 5px;
+
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+select:focus-visible {
+    outline: 3.5px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 10rem;
+}
+
+.select-wrapper::after {
+    content: "▼";
+    font-size: 0.7em;
+    top: 11px;
+    left: 6.3rem;
+    position: absolute;
+    transform: rotate(-90deg);
+    transition: transform 0.2s;
+}
+
+.select-wrapper:hover::after {
+    transform: rotate(0deg);
+}
