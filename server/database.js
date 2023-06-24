@@ -9,19 +9,13 @@ const { getPostsFromRSS } = require("./datasource");
 
 let pool;
 
-const init = () => {
+const initDatabase = () => {
   pool = mysql.createPool(process.env.DATABASE_CONNECTION_STRING);
-  syncPostsTableWithSource();
+  cron.schedule("0 0 0 * * *", () => syncPostsTableWithSource);
 };
 
-const getPost = async (id) => {
-  const res = await sendQuery("SELECT * from posts WHERE id=?", [id]);
-  return res[0];
-};
-
-const getAllPosts = async () => {
-  // TODO: Investigate why we can't pass columns as parameterized query here.
-  return await sendQuery("SELECT id,title_html from posts ORDER BY id ASC");
+const getPosts = async () => {
+  return await sendQuery("SELECT * from posts ORDER BY id ASC");
 };
 
 /**
@@ -86,10 +80,8 @@ const syncPostsTableWithSource = async () => {
     content_html = VALUES(content_html)`;
   sendTransactionQuery(query, values);
 };
-cron.schedule("0 0 0 * * *", () => syncPostsTableWithSource);
 
 module.exports = {
-  init,
-  getPost,
-  getAllPosts,
+  initDatabase,
+  getPosts,
 };

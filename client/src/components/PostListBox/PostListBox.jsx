@@ -22,7 +22,7 @@ export default function PostListBox({ activePostId, readPosts }) {
           <PostListItem
             key={post.id}
             post={post}
-            isActive={post.id === activePostId || (!activePostId && post.id === posts[0].id)}
+            isActive={post.id === activePostId}
             isRead={readPosts[post.id]}
           />
         )}
