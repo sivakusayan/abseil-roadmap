@@ -1,6 +1,4 @@
 :root {
-	--paragraph-spacing: 1.2rem;
-
 	--color-000: #FFF;
 	--color-100: #F3F4F8;
 	--color-200: #D2D4DA;
@@ -12,9 +10,35 @@
 	--color-800: #282A3A;
 	--color-900: #101223;
 
+	--link-text-color: #5755d9;
+	--bad-code-background-color: #fcf2f2;
+	--bad-code-text-color: #d73e48;
+	--bad-code-warning-background-color: #fedada;
+}
+
+html[data-theme="dark"] {
+	--color-000: #101223;
+	--color-100: #282A3A;
+	--color-200: #404252;
+	--color-300: #5B5D6b;
+	--color-400: #777986;
+	--color-500: #9496A1;
+	--color-600: #B3B4BD;
+	--color-700: #D2D4DA;
+	--color-800: #F3F4F8;
+	--color-900: #FFF;
+
+	--link-text-color: #5755d9;
+	--bad-code-background-color: #fcf2f2;
+	--bad-code-text-color: #d73e48;
+	--bad-code-warning-background-color: #fedada;
+}
+
+:root {
+	--paragraph-spacing: 1.2rem;
+
 	--background-color: var(--color-000);
 	--text-color: var(--color-900);
-	--link-text-color: #5755d9;
 
 	--post-list-background-color: var(--color-100);
 	--post-list-divider-color: var(--color-200);
@@ -23,9 +47,6 @@
 
 	--code-background-color: var(--color-100);
 	--code-text-color: var(--text-color);
-	--bad-code-background-color: #fcf2f2;
-	--bad-code-text-color: #d73e48;
-	--bad-code-warning-background-color: #fedada;
 }
 
 * {
@@ -38,6 +59,7 @@ body {
 	padding: 0;
 	scrollbar-gutter: stable !important;
 	scroll-behavior: smooth;
+	background: var(--color-000);
 }
 
 body::-webkit-scrollbar {
@@ -47,6 +69,7 @@ body::-webkit-scrollbar {
 body {
 	scrollbar-width: thin;
 	scrollbar-color: var(--scrollbar-color) var(--background-color);
+	color: var(--text-color);
 }
 
 body::-webkit-scrollbar-track {

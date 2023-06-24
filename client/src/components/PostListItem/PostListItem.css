@@ -39,11 +39,26 @@
 
 .post-item--active a[href] {
     color: var(--post-list-background-color);
+    font-weight: bold;
 }
 
 .post-item--active a[href] code {
     color: var(--code-background-color);
     background-color: var(--code-text-color);
+}
+
+html[data-theme="dark"] .post-item--active {
+    background-color: var(--color-000);
+    color: var(--text-color);
+}
+
+html[data-theme="dark"] .post-item--active a[href] {
+    color: var(--text-color);
+}
+
+html[data-theme="dark"] .post-item--active a[href] code {
+    color: var(--code-text-color);
+    background-color: var(--code-background-color);
 }
 
 svg {

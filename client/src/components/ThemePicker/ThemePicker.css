@@ -33,6 +33,7 @@ select:focus-visible {
     position: absolute;
     transform: rotate(-90deg);
     transition: transform 0.2s;
+    pointer-events: none;
 }
 
 .select-wrapper:hover::after {
