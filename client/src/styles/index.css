@@ -11,14 +11,15 @@
 	--color-900: #101223;
 
 	--link-text-color: #5755d9;
+	--button-background-color: #5755d9;
 	--bad-code-background-color: #fcf2f2;
 	--bad-code-text-color: #d73e48;
 	--bad-code-warning-background-color: #fedada;
 }
 
 html[data-theme="dark"] {
-	--color-000: #101223;
-	--color-100: #282A3A;
+	--color-000: #18191f;
+	--color-100: #212229;
 	--color-200: #404252;
 	--color-300: #5B5D6b;
 	--color-400: #777986;
@@ -26,9 +27,10 @@ html[data-theme="dark"] {
 	--color-600: #B3B4BD;
 	--color-700: #D2D4DA;
 	--color-800: #F3F4F8;
-	--color-900: #FFF;
+	--color-900: #F3F4F8;
 
-	--link-text-color: #5755d9;
+	--link-text-color: #8a89db;
+	--button-background-color: #5C5AC4;
 	--bad-code-background-color: #fcf2f2;
 	--bad-code-text-color: #d73e48;
 	--bad-code-warning-background-color: #fedada;
@@ -146,6 +148,10 @@ section p {
 .bad-code {
 	position: relative;
 	padding-top: 4rem;
+}
+
+.btn.btn-primary {
+	background-color: var(--button-background-color);
 }
 
 .bad-code::before {
