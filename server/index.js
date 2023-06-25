@@ -16,6 +16,7 @@ app.get("/api/posts", async (req, res) => {
     json = getCachedPosts();
   }
 
+  // 24 hours
   res.set('Cache-control', 'public, max-age=86400');
   res.json(json);
 });

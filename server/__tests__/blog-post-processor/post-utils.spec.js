@@ -1,4 +1,4 @@
-const { process } = require("../post-utils");
+const { process } = require("../../blog-post-processor/blog-post-processor");
 
 const fakePostHTML = `
 <p>Published on 3/2/19</p>

@@ -6,24 +6,24 @@
  */
 
 const { XMLParser } = require("fast-xml-parser");
-const { process } = require("./post-utils");
+const { process } = require("./blog-post-processor/blog-post-processor");
 
 /**
  * @returns {Promise<Post[]>}
  */
 const getPostsFromRSS = async () => {
   const RSS_URL = `http://feeds.feedburner.com/abseilio`;
-  let res;
+  let posts;
 
   try {
-    res = fetch(RSS_URL)
-      .then((response) => response.text())
-      .then((str) => wranglePostsXML(str));
+    const res = await fetch(RSS_URL);
+    const text = await res.text();
+    posts = await wranglePostsXML(text);
   } catch (e) {
     console.error("Failed to fetch post XML: ", e);
   }
 
-  return res;
+  return posts;
 };
 
 /**

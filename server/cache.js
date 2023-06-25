@@ -1,5 +1,6 @@
 /**
- * @fileoverview Caching layer for the server. Will refresh the cached data every 24 hours.
+ * @fileoverview Caching layer for the server. 
+ * Will refresh the cached data every 24 hours.
  */
 
 const NodeCache = require('node-cache');

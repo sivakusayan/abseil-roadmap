@@ -11,6 +11,8 @@ let pool;
 
 const initDatabase = () => {
   pool = mysql.createPool(process.env.DATABASE_CONNECTION_STRING);
+
+  syncPostsTableWithSource();
   cron.schedule("0 0 0 * * *", () => syncPostsTableWithSource);
 };
 
